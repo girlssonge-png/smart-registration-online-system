@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SmartReg Hub - Student & Teacher Registration</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to bottom right, #f7f9fc, #e6f0ff);
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #4a90e2;
+            color: white;
+            text-align: center;
+            padding: 20px 20px 40px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 10px; }
+        .logo-icon { font-size: 2.2em; }
+        .logo-text { font-family: 'Verdana', sans-serif; font-weight: bold; font-size: 2em; color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.3); }
+
+        .school-title { font-family: 'Georgia', serif; font-size: 2.2em; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; color: #fff8dc; margin-bottom: 5px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); animation: slideGlow 3s ease-in-out infinite alternate; }
+        .website-name { font-family: 'Arial', sans-serif; font-size: 1.8em; font-weight: bold; letter-spacing: 1px; color: #ffffff; text-shadow: 1px 1px 3px rgba(0,0,0,0.2); animation: fadePulse 3s ease-in-out infinite alternate; }
+
+        @keyframes slideGlow { 0% { transform: translateY(-50px); color: #fff8dc; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);} 50% { transform: translateY(0); color: #ffe066; text-shadow: 4px 4px 10px rgba(255,255,150,0.6);} 100% { transform: translateY(-50px); color: #fff8dc; text-shadow: 2px 2px 4px rgba(0,0,0,0.3);} }
+        @keyframes fadePulse { 0% { opacity: 0.8; } 50% { opacity: 1; } 100% { opacity: 0.8; } }
+
+        nav { background-color: #357ABD; display: flex; justify-content: center; padding: 10px 0; }
+        nav a { color: white; text-decoration: none; margin: 0 15px; font-weight: bold; }
+        nav a:hover { text-decoration: underline; }
+
+        .container { max-width: 600px; margin: 30px auto; background-color: rgba(255,255,255,0.9); padding: 30px; border-radius: 15px; box-shadow: 0px 5px 20px rgba(0,0,0,0.1); }
+        h2 { text-align: center; color: #333; }
+        form { display: flex; flex-direction: column; }
+        label { margin: 10px 0 5px; font-weight: bold; }
+        input[type="text"], input[type="email"], input[type="number"], input[type="time"] { padding: 10px; border-radius: 8px; border: 1px solid #ccc; }
+        input[type="submit"], button { margin-top: 20px; padding: 12px; border: none; border-radius: 10px; background-color: #4a90e2; color: white; font-size: 1em; cursor: pointer; font-weight: bold; }
+        input[type="submit"]:hover, button:hover { background-color: #357ABD; }
+
+        .student-list, .teacher-list { max-width: 800px; margin: 20px auto; padding: 20px; background-color: rgba(255,255,255,0.95); border-radius: 15px; box-shadow: 0px 5px 15px rgba(0,0,0,0.1); }
+        .name-count { margin-bottom: 15px; font-size: 1.1em; color: #333; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; }
+        th { background-color: #4a90e2; color: white; }
+
+        .search-container { max-width: 600px; margin: 20px auto; background-color: rgba(255,255,255,0.95); padding: 20px; border-radius: 12px; box-shadow: 0px 4px 12px rgba(0,0,0,0.1); }
+        .search-container input[type="text"] { width: 80%; margin-right: 10px; }
+        .search-result { margin-top: 15px; font-weight: bold; color: #4a90e2; }
+
+        .early { color: green; font-weight: bold; }
+        .late { color: red; font-weight: bold; }
+
+        footer { text-align: center; padding: 15px; background-color: #357ABD; color: white; margin-top: 40px; }
+        .bg-text { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 8em; color: rgba(70, 130, 180, 0.05); z-index: 0; pointer-events: none; user-select: none; }
+
+        .teacher-counts { margin-bottom: 10px; font-weight: bold; font-size: 1.1em; }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo"><div class="logo-icon">🎓📖</div><div class="logo-text">SONGEA GIRLS</div></div>
+        <div class="school-title">SONGEA GIRLS SECONDARY SCHOOL</div>
+        <div class="website-name">SmartReg Hub</div>
+    </header>
+
+    <nav>
+        <a href="#registration">Register</a>
+        <a href="#students">Students List</a>
+        <a href="#findReg">Find Reg No</a>
+        <a href="#teacherReg">Teacher Attendance</a>
+    </nav>
+
+    <div class="bg-text">Songea Girls</div>
+
+    <!-- Student Registration -->
+    <div class="container" id="registration">
+        <h2>Student Registration Form</h2>
+        <form id="regForm">
+            <label for="name">Student Name</label>
+            <input type="text" id="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+            <label for="phone">Parent's Phone Number</label>
+            <input type="text" id="phone" required>
+            <label for="regNo">Registration Number</label>
+            <input type="text" id="regNo" required>
+            <input type="submit" value="Register Student">
+        </form>
+    </div>
+
+    <div class="search-container" id="findReg">
+        <h2>Find Your Registration Number</h2>
+        <input type="text" id="searchName" placeholder="Enter your name">
+        <button id="searchBtn">Find</button>
+        <div class="search-result" id="searchResult"></div>
+    </div>
+
+    <div class="student-list" id="students">
+        <h2>Registered Students</h2>
+        <div class="name-count" id="nameCount"></div>
+        <table id="studentTable">
+            <thead>
+                <tr><th>Name</th><th>Email</th><th>Parent's Phone</th><th>Registration No.</th></tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <!-- Teacher Attendance -->
+    <div class="container" id="teacherReg">
+        <h2>Teacher Attendance</h2>
+        <form id="teacherForm">
+            <label for="teacherName">Teacher Name</label>
+            <input type="text" id="teacherName" required>
+            <label for="arrivalTime">Arrival Time</label>
+            <input type="time" id="arrivalTime" required>
+            <input type="submit" value="Register Arrival">
+        </form>
+    </div>
+
+    <div class="teacher-list" id="teacherList">
+        <h2>Teacher Attendance Records</h2>
+        <div class="teacher-counts">
+            Early Teachers: <span id="earlyCount">0</span> | Late Teachers: <span id="lateCount">0</span>
+        </div>
+        <h3>Early (Before 8:00 AM)</h3>
+        <ul id="earlyTeachers"></ul>
+        <h3>Late (After 8:00 AM)</h3>
+        <ul id="lateTeachers"></ul>
+    </div>
+
+    <footer>© 2026 SmartReg Hub</footer>
+
+    <script>
+        // ---------- STUDENT CODE ----------
+        const form = document.getElementById('regForm');
+        const tableBody = document.querySelector('#studentTable tbody');
+        const nameCountDiv = document.getElementById('nameCount');
+        const searchBtn = document.getElementById('searchBtn');
+        const searchResult = document.getElementById('searchResult');
+
+        let students = JSON.parse(localStorage.getItem('students')) || [];
+        renderTable();
+        updateNameCount();
+
+        form.addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const regNo = document.getElementById('regNo').value.trim();
+
+            students.push({name, email, phone, regNo});
+            localStorage.setItem('students', JSON.stringify(students));
+
+            renderTable();
+            updateNameCount();
+            form.reset();
+        });
+
+        function renderTable() {
+            tableBody.innerHTML = '';
+            students.forEach(student => {
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${student.name}</td><td>${student.email}</td><td>${student.phone}</td><td>${student.regNo}</td>`;
+                tableBody.appendChild(row);
+            });
+        }
+
+        function updateNameCount() {
+            const count = {};
+            students.forEach(s => { count[s.name] = (count[s.name] || 0) + 1; });
+            let html = '<strong>Student Name Counts:</strong> ';
+            for (const [name, c] of Object.entries(count)) html += `${name}: ${c} | `;
+            nameCountDiv.innerHTML = html.slice(0,-3);
+        }
+
+        searchBtn.addEventListener('click', function() {
+            const name = document.getElementById('searchName').value.trim();
+            if (!name) { searchResult.textContent = "Please enter your name."; return; }
+            const found = students.filter(s => s.name.toLowerCase() === name.toLowerCase());
+            if (found.length === 0) searchResult.textContent = "No registration number found for this name.";
+            else searchResult.textContent = `Registration Number(s): ${found.map(s => s.regNo).join(', ')}`;
+        });
+
+        // ---------- TEACHER CODE ----------
+        const teacherForm = document.getElementById('teacherForm');
+        const earlyList = document.getElementById('earlyTeachers');
+        const lateList = document.getElementById('lateTeachers');
+        const earlyCountSpan = document.getElementById('earlyCount');
+        const lateCountSpan = document.getElementById('lateCount');
+
+        let teachers = JSON.parse(localStorage.getItem('teachers')) || [];
+        renderTeacherList();
+
+        teacherForm.addEventListener('submit', function(e){
+            e.preventDefault();
+            const name = document.getElementById('teacherName').value.trim();
+            const time = document.getElementById('arrivalTime').value;
+            if(!name || !time) return;
+
+            teachers.push({name, time});
+            localStorage.setItem('teachers', JSON.stringify(teachers));
+            renderTeacherList();
+            teacherForm.reset();
+        });
+
+        function renderTeacherList() {
+            earlyList.innerHTML = '';
+            lateList.innerHTML = '';
+            let earlyCount = 0, lateCount = 0;
+            const earlyTime = "08:00";
+
+            teachers.forEach(t => {
+                const li = document.createElement('li');
+                li.textContent = `${t.name} - ${t.time}`;
+                if(t.time <= earlyTime) { li.classList.add('early'); earlyList.appendChild(li); earlyCount++; }
+                else { li.classList.add('late'); lateList.appendChild(li); lateCount++; }
+            });
+
+            earlyCountSpan.textContent = earlyCount;
+            lateCountSpan.textContent = lateCount;
+        }
+
+    </script>
+</body>
+</html>
